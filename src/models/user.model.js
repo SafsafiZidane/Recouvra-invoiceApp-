@@ -1,3 +1,4 @@
+const { required } = require('joi');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema( {
@@ -26,11 +27,13 @@ const userSchema = new mongoose.Schema( {
 
     role: {
       type:    String,
+      required : true,
       enum:    {
         values:  ['agent', 'manager', 'admin'],
         message: 'Role must be agent, manager, or admin',
       },
       default: 'agent',
+    
     },
 
     isActive: {
