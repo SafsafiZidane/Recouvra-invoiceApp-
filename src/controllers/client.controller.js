@@ -1,5 +1,4 @@
-const Client = require('../models/client.model')
-
+const Client = require('../models/client.model');
 
 
 const CreateClient = async(req,res) => {
@@ -10,16 +9,21 @@ const CreateClient = async(req,res) => {
         if (!name || !email || !phone || !address || !company || !notes) {
                       return res.status(400).json({ message: "All fields are required" });
         }
-
-        const newClient = new Client({
+        const client = await Client.findOne({ email });
+    if (client) return res.status(500).json({ message: "Client already exists" });
+        
+      const newClient = new Client({
       name,
       email,
       phone,
       address,
       company,
       notes,
+      createdBy : req.user._id,
     });
     await newClient.save();
+    res.status(201).json({ message: `Client created with email ${email}` });
+
     
 } catch (error) {
     res.status(500).json({ message: "something went wrong" });
@@ -94,8 +98,9 @@ const updateClient = async (req, res) => {
 const deleteClient = async (req, res) => {
   try {
     const { id } = req.params;
+    const cleanId = id.trim();
 
-    const client = await Client.findByIdAndDelete(id);
+    const client = await Client.findByIdAndDelete(cleanId);
 
     if (!client) {
       return res.status(404).json({ message: "Client not found" });

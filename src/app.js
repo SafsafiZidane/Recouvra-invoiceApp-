@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const authRoutes = require("./routes/authRoutes");
-const clientroutes = require('./routes/clientRoutes');
+const authRoutes = require("./routes/auth.routes");
+const clientRoutes = require('./routes/client.routes');
+const invoiceRoutes = require('./routes/invoice.routes');
 const cookieParser = require("cookie-parser");
 
 
@@ -14,6 +15,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 
-app.use("/api/client/", clientroutes );
+app.use("/api/client/", clientRoutes );
+app.use("/api/invoice/", invoiceRoutes );
 
 module.exports = app;
