@@ -5,6 +5,7 @@ const createPaymentSchema = Joi.object({
   amount:    Joi.number().positive().required(),
   method:    Joi.string().valid('cash', 'transfer', 'check').required(),
   note:      Joi.string().max(300).optional(),
+  date:      Joi.date().required(),
 });
 
 module.exports = {createPaymentSchema};
