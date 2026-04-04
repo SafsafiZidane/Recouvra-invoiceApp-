@@ -43,7 +43,7 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch)
-      return res.status(400).json({ message: "invalid crendentails" });
+      return res.status(401).json({ message: "invalid crendentails" });
 
     user.lastLogin = new Date();
     await user.save();
